@@ -9,12 +9,16 @@ declare global {
   interface NexusGenCustomInputMethods<TypeName extends string> {
     date<FieldName extends string>(fieldName: FieldName, opts?: core.ScalarInputFieldConfig<core.GetGen3<"inputTypes", TypeName, FieldName>>): void // "Date";
     datetime<FieldName extends string>(fieldName: FieldName, opts?: core.ScalarInputFieldConfig<core.GetGen3<"inputTypes", TypeName, FieldName>>): void // "DateTime";
+    upload<FieldName extends string>(fieldName: FieldName, opts?: core.ScalarInputFieldConfig<core.GetGen3<"inputTypes", TypeName, FieldName>>): void // "Upload";
+    password<FieldName extends string>(fieldName: FieldName, opts?: core.ScalarInputFieldConfig<core.GetGen3<"inputTypes", TypeName, FieldName>>): void // "Password";
   }
 }
 declare global {
   interface NexusGenCustomOutputMethods<TypeName extends string> {
     date<FieldName extends string>(fieldName: FieldName, ...opts: core.ScalarOutSpread<TypeName, FieldName>): void // "Date";
     datetime<FieldName extends string>(fieldName: FieldName, ...opts: core.ScalarOutSpread<TypeName, FieldName>): void // "DateTime";
+    upload<FieldName extends string>(fieldName: FieldName, ...opts: core.ScalarOutSpread<TypeName, FieldName>): void // "Upload";
+    password<FieldName extends string>(fieldName: FieldName, ...opts: core.ScalarOutSpread<TypeName, FieldName>): void // "Password";
   }
 }
 
@@ -28,6 +32,17 @@ export interface NexusGenInputs {
     courtId: string; // ID!
     end: any; // DateTime!
     start: any; // DateTime!
+  }
+  LoginInput: { // input type
+    password: string; // String!
+    username: string; // String!
+  }
+  SignUpInput: { // input type
+    avatar?: any | null; // Upload
+    confirmPassword: any; // Password!
+    fullName: string; // String!
+    password: any; // Password!
+    username: string; // String!
   }
 }
 
@@ -82,10 +97,14 @@ export interface NexusGenRootTypes {
   ID: string;
   Date: Date;
   DateTime: DateTime;
+  Password: any;
+  Upload: any;
 }
 
 export interface NexusGenAllTypes extends NexusGenRootTypes {
   CreateSessionInput: NexusGenInputs['CreateSessionInput'];
+  LoginInput: NexusGenInputs['LoginInput'];
+  SignUpInput: NexusGenInputs['SignUpInput'];
   CourtType: NexusGenEnums['CourtType'];
 }
 
@@ -148,13 +167,13 @@ export interface NexusGenInheritedFields {}
 
 export type NexusGenObjectNames = "Address" | "Coords" | "Court" | "Query" | "Session" | "User";
 
-export type NexusGenInputNames = "CreateSessionInput";
+export type NexusGenInputNames = "CreateSessionInput" | "LoginInput" | "SignUpInput";
 
 export type NexusGenEnumNames = "CourtType";
 
 export type NexusGenInterfaceNames = never;
 
-export type NexusGenScalarNames = "Boolean" | "Date" | "DateTime" | "Float" | "ID" | "Int" | "String";
+export type NexusGenScalarNames = "Boolean" | "Date" | "DateTime" | "Float" | "ID" | "Int" | "Password" | "String" | "Upload";
 
 export type NexusGenUnionNames = never;
 
