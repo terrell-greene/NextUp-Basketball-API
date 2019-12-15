@@ -28,6 +28,14 @@ declare global {
 }
 
 export interface NexusGenInputs {
+  CoordsFilterInput: { // input type
+    gte: number; // Float!
+    lte: number; // Float!
+  }
+  CourtsFilterInput: { // input type
+    latitude: NexusGenInputs['CoordsFilterInput']; // CoordsFilterInput!
+    longitude: NexusGenInputs['CoordsFilterInput']; // CoordsFilterInput!
+  }
   CreateSessionInput: { // input type
     courtId: string; // ID!
     end: any; // DateTime!
@@ -39,6 +47,10 @@ export interface NexusGenInputs {
   LoginInput: { // input type
     password: string; // String!
     username: string; // String!
+  }
+  SessionsFilterInput: { // input type
+    latitude: NexusGenInputs['CoordsFilterInput']; // CoordsFilterInput!
+    longitude: NexusGenInputs['CoordsFilterInput']; // CoordsFilterInput!
   }
   SignUpInput: { // input type
     avatar?: any | null; // Upload
@@ -115,9 +127,12 @@ export interface NexusGenRootTypes {
 }
 
 export interface NexusGenAllTypes extends NexusGenRootTypes {
+  CoordsFilterInput: NexusGenInputs['CoordsFilterInput'];
+  CourtsFilterInput: NexusGenInputs['CourtsFilterInput'];
   CreateSessionInput: NexusGenInputs['CreateSessionInput'];
   JoinUnjoinSessionInput: NexusGenInputs['JoinUnjoinSessionInput'];
   LoginInput: NexusGenInputs['LoginInput'];
+  SessionsFilterInput: NexusGenInputs['SessionsFilterInput'];
   SignUpInput: NexusGenInputs['SignUpInput'];
   UpdateSessionInput: NexusGenInputs['UpdateSessionInput'];
   CourtType: NexusGenEnums['CourtType'];
@@ -205,6 +220,14 @@ export interface NexusGenArgTypes {
       input: NexusGenInputs['UpdateSessionInput']; // UpdateSessionInput!
     }
   }
+  Query: {
+    courts: { // args
+      where?: NexusGenInputs['CourtsFilterInput'] | null; // CourtsFilterInput
+    }
+    sessions: { // args
+      where?: NexusGenInputs['SessionsFilterInput'] | null; // SessionsFilterInput
+    }
+  }
 }
 
 export interface NexusGenAbstractResolveReturnTypes {
@@ -214,7 +237,7 @@ export interface NexusGenInheritedFields {}
 
 export type NexusGenObjectNames = "Address" | "AuthPayload" | "Coords" | "Court" | "Mutation" | "Query" | "Session" | "User";
 
-export type NexusGenInputNames = "CreateSessionInput" | "JoinUnjoinSessionInput" | "LoginInput" | "SignUpInput" | "UpdateSessionInput";
+export type NexusGenInputNames = "CoordsFilterInput" | "CourtsFilterInput" | "CreateSessionInput" | "JoinUnjoinSessionInput" | "LoginInput" | "SessionsFilterInput" | "SignUpInput" | "UpdateSessionInput";
 
 export type NexusGenEnumNames = "CourtType";
 
