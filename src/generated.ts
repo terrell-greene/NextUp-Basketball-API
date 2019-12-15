@@ -24,6 +24,11 @@ declare global {
 }
 
 export interface NexusGenInputs {
+  CreateSessionInput: { // input type
+    courtId: string; // ID!
+    end: any; // DateTime!
+    start: any; // DateTime!
+  }
 }
 
 export interface NexusGenEnums {
@@ -80,6 +85,7 @@ export interface NexusGenRootTypes {
 }
 
 export interface NexusGenAllTypes extends NexusGenRootTypes {
+  CreateSessionInput: NexusGenInputs['CreateSessionInput'];
   CourtType: NexusGenEnums['CourtType'];
 }
 
@@ -142,7 +148,7 @@ export interface NexusGenInheritedFields {}
 
 export type NexusGenObjectNames = "Address" | "Coords" | "Court" | "Query" | "Session" | "User";
 
-export type NexusGenInputNames = never;
+export type NexusGenInputNames = "CreateSessionInput";
 
 export type NexusGenEnumNames = "CourtType";
 

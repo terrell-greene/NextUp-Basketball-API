@@ -14,3 +14,4 @@ export const GQLDateTime = decorateType(GraphQLDateTime, {
 export * from './query'
 export * from './model'
 export * from './enum'
+export * from './input'
