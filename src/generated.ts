@@ -33,6 +33,9 @@ export interface NexusGenInputs {
     end: any; // DateTime!
     start: any; // DateTime!
   }
+  JoinUnjoinSessionInput: { // input type
+    sessionId: string; // ID!
+  }
   LoginInput: { // input type
     password: string; // String!
     username: string; // String!
@@ -113,6 +116,7 @@ export interface NexusGenRootTypes {
 
 export interface NexusGenAllTypes extends NexusGenRootTypes {
   CreateSessionInput: NexusGenInputs['CreateSessionInput'];
+  JoinUnjoinSessionInput: NexusGenInputs['JoinUnjoinSessionInput'];
   LoginInput: NexusGenInputs['LoginInput'];
   SignUpInput: NexusGenInputs['SignUpInput'];
   UpdateSessionInput: NexusGenInputs['UpdateSessionInput'];
@@ -149,8 +153,10 @@ export interface NexusGenFieldTypes {
   }
   Mutation: { // field return type
     createSession: NexusGenRootTypes['Session']; // Session!
+    joinSession: NexusGenRootTypes['Session']; // Session!
     login: NexusGenRootTypes['AuthPayload']; // AuthPayload!
     signup: NexusGenRootTypes['AuthPayload']; // AuthPayload!
+    unjoinSession: NexusGenRootTypes['Session']; // Session!
     updateSession: NexusGenRootTypes['Session']; // Session!
   }
   Query: { // field return type
@@ -183,11 +189,17 @@ export interface NexusGenArgTypes {
     createSession: { // args
       input: NexusGenInputs['CreateSessionInput']; // CreateSessionInput!
     }
+    joinSession: { // args
+      input: NexusGenInputs['JoinUnjoinSessionInput']; // JoinUnjoinSessionInput!
+    }
     login: { // args
       input: NexusGenInputs['LoginInput']; // LoginInput!
     }
     signup: { // args
       input: NexusGenInputs['SignUpInput']; // SignUpInput!
+    }
+    unjoinSession: { // args
+      input: NexusGenInputs['JoinUnjoinSessionInput']; // JoinUnjoinSessionInput!
     }
     updateSession: { // args
       input: NexusGenInputs['UpdateSessionInput']; // UpdateSessionInput!
@@ -202,7 +214,7 @@ export interface NexusGenInheritedFields {}
 
 export type NexusGenObjectNames = "Address" | "AuthPayload" | "Coords" | "Court" | "Mutation" | "Query" | "Session" | "User";
 
-export type NexusGenInputNames = "CreateSessionInput" | "LoginInput" | "SignUpInput" | "UpdateSessionInput";
+export type NexusGenInputNames = "CreateSessionInput" | "JoinUnjoinSessionInput" | "LoginInput" | "SignUpInput" | "UpdateSessionInput";
 
 export type NexusGenEnumNames = "CourtType";
 

@@ -3,7 +3,9 @@ import {
   ServerError,
   CreateSessionError,
   UpdateSessionError,
-  AuthorizationError
+  AuthorizationError,
+  JoinSessionError,
+  UnjoinSessionError
 } from '../../errors'
 import moment = require('moment-timezone')
 
@@ -111,7 +113,124 @@ export const updateSession = mutationField('updateSession', {
         sessionId,
         { start: start ? start : session.start, end: end ? end : session.end },
         { new: true }
-      ).populate('createdBy court')
+      ).populate('createdBy court attending')
+
+      return updatedSession!
+    } catch (error) {
+      if (error.data) throw error
+
+      console.error(error)
+      throw new ServerError()
+    }
+  }
+})
+
+export const joinSession = mutationField('joinSession', {
+  type: 'Session',
+  args: { input: arg({ type: 'JoinUnjoinSessionInput', required: true }) },
+  resolve: async (_, { input }, { db, request }) => {
+    const { sessionId } = input
+    const {
+      body: { userId }
+    } = request
+
+    try {
+      const session = await db.Session.findById(sessionId).select(
+        'createdBy attending'
+      )
+
+      if (!session) {
+        throw new JoinSessionError({
+          data: { sessionId: 'No session exists with that id' }
+        })
+      }
+
+      const { createdBy, attending } = session
+
+      const createdSession: boolean = createdBy.toString() === userId
+      const alreadyAttending = attending.find(
+        (user: string) => user.toString() === userId
+      )
+
+      if (alreadyAttending || createdSession) {
+        throw new JoinSessionError({
+          data: {
+            session: 'User is already attending session'
+          }
+        })
+      }
+
+      const updatedSession = await db.Session.findByIdAndUpdate(
+        sessionId,
+        {
+          $push: { attending: userId }
+        },
+        { new: true }
+      ).populate('court createdBy attending')
+
+      return updatedSession!
+    } catch (error) {
+      if (error.data) throw error
+
+      console.error(error)
+      throw new ServerError()
+    }
+  }
+})
+
+export const unjoinSession = mutationField('unjoinSession', {
+  type: 'Session',
+  args: {
+    input: arg({ type: 'JoinUnjoinSessionInput', required: true })
+  },
+  resolve: async (_, { input }, { db, request }) => {
+    const { sessionId } = input
+    const {
+      body: { userId }
+    } = request
+
+    try {
+      const session = await db.Session.findById(sessionId).select(
+        'createdBy attending'
+      )
+
+      if (!session) {
+        throw new JoinSessionError({
+          data: { sessionId: 'No session exists with that id' }
+        })
+      }
+
+      const { createdBy, attending } = session
+
+      const alreadyAttending = attending.find(
+        (user: string) => user.toString() === userId
+      )
+      const createdSession = createdBy.toString() === userId
+
+      if (!alreadyAttending) {
+        throw new UnjoinSessionError({
+          data: {
+            sessionId: 'User is not attending this session'
+          }
+        })
+      }
+
+      if (createdSession) {
+        throw new UnjoinSessionError({
+          data: {
+            session:
+              "User created session. Can't unjoin, must delete session instead."
+          }
+        })
+      }
+
+      const updatedSession = await db.Session.findByIdAndUpdate(
+        sessionId,
+        {
+          $pull: { attending: userId }
+        },
+        { new: true }
+      ).populate('court createdBy attending')
 
       return updatedSession!
     } catch (error) {

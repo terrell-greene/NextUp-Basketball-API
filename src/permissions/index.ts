@@ -57,7 +57,9 @@ export default shield(
       login: allow,
       signup: allow,
       createSession: isAuthenticated,
-      updateSession: isAuthenticated
+      updateSession: isAuthenticated,
+      joinSession: isAuthenticated,
+      unjoinSession: isAuthenticated
     }
   },
   { fallbackError: new AuthorizationError() }

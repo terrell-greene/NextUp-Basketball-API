@@ -60,6 +60,11 @@ A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the
 """
 scalar DateTime
 
+"""Required input for to join/unjoin a session"""
+input JoinUnjoinSessionInput {
+  sessionId: ID!
+}
+
 """Input for logging in a user"""
 input LoginInput {
   password: String!
@@ -68,12 +73,14 @@ input LoginInput {
 
 type Mutation {
   createSession(input: CreateSessionInput!): Session!
+  joinSession(input: JoinUnjoinSessionInput!): Session!
 
   """Login a user"""
   login(input: LoginInput!): AuthPayload!
 
   """Sign up new user"""
   signup(input: SignUpInput!): AuthPayload!
+  unjoinSession(input: JoinUnjoinSessionInput!): Session!
   updateSession(input: UpdateSessionInput!): Session!
 }
 
