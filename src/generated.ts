@@ -142,6 +142,7 @@ export interface NexusGenFieldTypes {
     type: NexusGenEnums['CourtType'][]; // [CourtType!]!
   }
   Mutation: { // field return type
+    createSession: NexusGenRootTypes['Session']; // Session!
     login: NexusGenRootTypes['AuthPayload']; // AuthPayload!
     signup: NexusGenRootTypes['AuthPayload']; // AuthPayload!
   }
@@ -172,6 +173,9 @@ export interface NexusGenFieldTypes {
 
 export interface NexusGenArgTypes {
   Mutation: {
+    createSession: { // args
+      input: NexusGenInputs['CreateSessionInput']; // CreateSessionInput!
+    }
     login: { // args
       input: NexusGenInputs['LoginInput']; // LoginInput!
     }

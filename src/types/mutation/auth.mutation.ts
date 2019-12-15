@@ -8,6 +8,7 @@ import { createSession } from './utils.mutation'
 const { equals } = validator
 
 export const login = mutationField('login', {
+  description: 'Login a user',
   type: 'AuthPayload',
   args: {
     input: arg({ type: 'LoginInput', required: true })
@@ -48,6 +49,7 @@ export const login = mutationField('login', {
 })
 
 export const signup = mutationField('signup', {
+  description: 'Sign up new user',
   type: 'AuthPayload',
   args: {
     input: arg({ type: 'SignUpInput', required: true })

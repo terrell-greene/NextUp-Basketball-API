@@ -33,6 +33,7 @@ type Court {
   type: [CourtType!]!
 }
 
+"""Different types of available courts"""
 enum CourtType {
   Indoor
   Outdoor
@@ -66,7 +67,12 @@ input LoginInput {
 }
 
 type Mutation {
+  createSession(input: CreateSessionInput!): Session!
+
+  """Login a user"""
   login(input: LoginInput!): AuthPayload!
+
+  """Sign up new user"""
   signup(input: SignUpInput!): AuthPayload!
 }
 
