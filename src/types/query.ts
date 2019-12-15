@@ -6,7 +6,18 @@ export const courts = queryField('courts', {
   args: {
     where: arg({ type: 'CourtsFilterInput' })
   },
-  resolve: (_, args, { db }) => db.Court.find()
+  resolve: (_, { where }, { db }) => {
+    if (where) {
+      const { latitude, longitude } = where
+
+      return db.Court.find({
+        'coords.latitude': { $gte: latitude.gte, $lte: latitude.lte },
+        'coords.longitude': { $gte: longitude.gte, $lte: longitude.lte }
+      })
+    }
+
+    return db.Court.find()
+  }
 })
 
 export const sessions = queryField('sessions', {
@@ -15,8 +26,21 @@ export const sessions = queryField('sessions', {
   args: {
     where: arg({ type: 'SessionsFilterInput' })
   },
-  resolve: (_, args, { db }) =>
-    db.Session.find({ end: { $gte: new Date().toISOString() } })
+  resolve: (_, { where }, { db }) => {
+    if (where) {
+      const { latitude, longitude } = where
+
+      return db.Session.find({
+        end: { $gte: new Date().toISOString() },
+        'coords.latitude': { $gte: latitude.gte, $lte: latitude.lte },
+        'coords.longitude': { $gte: longitude.gte, $lte: longitude.lte }
+      })
+        .populate('createdBy court attending')
+        .sort({ start: 'asc' })
+    }
+
+    return db.Session.find({ end: { $gte: new Date().toISOString() } })
       .populate('createdBy court attending')
       .sort({ start: 'asc' })
+  }
 })
