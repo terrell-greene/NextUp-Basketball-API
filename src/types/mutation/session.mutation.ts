@@ -1,5 +1,10 @@
 import { mutationField, arg } from 'nexus'
-import { ServerError, CreateSessionError } from '../../errors'
+import {
+  ServerError,
+  CreateSessionError,
+  UpdateSessionError,
+  AuthorizationError
+} from '../../errors'
 import moment = require('moment-timezone')
 
 export const createSession = mutationField('createSession', {
@@ -47,6 +52,73 @@ export const createSession = mutationField('createSession', {
         console.error(error)
         throw new ServerError()
       }
+    }
+  }
+})
+
+export const updateSession = mutationField('updateSession', {
+  type: 'Session',
+  args: {
+    input: arg({ type: 'UpdateSessionInput', required: true })
+  },
+  resolve: async (_, { input }, { db, request }) => {
+    const { sessionId, start, end } = input
+
+    const {
+      body: { userId }
+    } = request
+
+    const throwDurationError = () => {
+      throw new UpdateSessionError({
+        data: { end: 'Sessions must be at least one hour long' }
+      })
+    }
+
+    try {
+      const session = await db.Session.findById(sessionId).select(
+        'createdBy start end'
+      )
+
+      if (!session) {
+        throw new UpdateSessionError({
+          data: { sessionId: 'No session exists with that id' }
+        })
+      }
+
+      if (session.createdBy.toString() !== userId) {
+        throw new AuthorizationError()
+      }
+
+      // If start and no end, check the diff between
+      // new start and current end
+      if (start && !end && moment(start).diff(session.end, 'hours') > -1) {
+        throwDurationError()
+      }
+
+      // If no start and  end, check the diff between
+      // current start and new end
+      if (!start && end && moment(session.start).diff(end, 'hours') > -1) {
+        throwDurationError()
+      }
+
+      // If start and end, check the diff between
+      // new start and new end
+      if (start && end && moment(start).diff(end, 'hours') > -1) {
+        throwDurationError()
+      }
+
+      const updatedSession = await db.Session.findByIdAndUpdate(
+        sessionId,
+        { start: start ? start : session.start, end: end ? end : session.end },
+        { new: true }
+      ).populate('createdBy court')
+
+      return updatedSession!
+    } catch (error) {
+      if (error.data) throw error
+
+      console.error(error)
+      throw new ServerError()
     }
   }
 })

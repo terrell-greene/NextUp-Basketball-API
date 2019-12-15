@@ -56,7 +56,8 @@ export default shield(
     Mutation: {
       login: allow,
       signup: allow,
-      createSession: isAuthenticated
+      createSession: isAuthenticated,
+      updateSession: isAuthenticated
     }
   },
   { fallbackError: new AuthorizationError() }

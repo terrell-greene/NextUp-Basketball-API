@@ -74,6 +74,7 @@ type Mutation {
 
   """Sign up new user"""
   signup(input: SignUpInput!): AuthPayload!
+  updateSession(input: UpdateSessionInput!): Session!
 }
 
 scalar Password
@@ -104,6 +105,13 @@ input SignUpInput {
   fullName: String!
   password: Password!
   username: String!
+}
+
+"""Required input for updating a session"""
+input UpdateSessionInput {
+  end: DateTime
+  sessionId: ID!
+  start: DateTime
 }
 
 """The `Upload` scalar type represents a file upload."""

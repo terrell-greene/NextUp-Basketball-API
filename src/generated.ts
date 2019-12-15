@@ -44,6 +44,11 @@ export interface NexusGenInputs {
     password: any; // Password!
     username: string; // String!
   }
+  UpdateSessionInput: { // input type
+    end?: any | null; // DateTime
+    sessionId: string; // ID!
+    start?: any | null; // DateTime
+  }
 }
 
 export interface NexusGenEnums {
@@ -110,6 +115,7 @@ export interface NexusGenAllTypes extends NexusGenRootTypes {
   CreateSessionInput: NexusGenInputs['CreateSessionInput'];
   LoginInput: NexusGenInputs['LoginInput'];
   SignUpInput: NexusGenInputs['SignUpInput'];
+  UpdateSessionInput: NexusGenInputs['UpdateSessionInput'];
   CourtType: NexusGenEnums['CourtType'];
 }
 
@@ -145,6 +151,7 @@ export interface NexusGenFieldTypes {
     createSession: NexusGenRootTypes['Session']; // Session!
     login: NexusGenRootTypes['AuthPayload']; // AuthPayload!
     signup: NexusGenRootTypes['AuthPayload']; // AuthPayload!
+    updateSession: NexusGenRootTypes['Session']; // Session!
   }
   Query: { // field return type
     courts: NexusGenRootTypes['Court'][]; // [Court!]!
@@ -182,6 +189,9 @@ export interface NexusGenArgTypes {
     signup: { // args
       input: NexusGenInputs['SignUpInput']; // SignUpInput!
     }
+    updateSession: { // args
+      input: NexusGenInputs['UpdateSessionInput']; // UpdateSessionInput!
+    }
   }
 }
 
@@ -192,7 +202,7 @@ export interface NexusGenInheritedFields {}
 
 export type NexusGenObjectNames = "Address" | "AuthPayload" | "Coords" | "Court" | "Mutation" | "Query" | "Session" | "User";
 
-export type NexusGenInputNames = "CreateSessionInput" | "LoginInput" | "SignUpInput";
+export type NexusGenInputNames = "CreateSessionInput" | "LoginInput" | "SignUpInput" | "UpdateSessionInput";
 
 export type NexusGenEnumNames = "CourtType";
 
