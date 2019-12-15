@@ -143,6 +143,7 @@ export interface NexusGenFieldTypes {
   }
   Mutation: { // field return type
     login: NexusGenRootTypes['AuthPayload']; // AuthPayload!
+    signup: NexusGenRootTypes['AuthPayload']; // AuthPayload!
   }
   Query: { // field return type
     courts: NexusGenRootTypes['Court'][]; // [Court!]!
@@ -173,6 +174,9 @@ export interface NexusGenArgTypes {
   Mutation: {
     login: { // args
       input: NexusGenInputs['LoginInput']; // LoginInput!
+    }
+    signup: { // args
+      input: NexusGenInputs['SignUpInput']; // SignUpInput!
     }
   }
 }

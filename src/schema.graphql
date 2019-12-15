@@ -67,6 +67,7 @@ input LoginInput {
 
 type Mutation {
   login(input: LoginInput!): AuthPayload!
+  signup(input: SignUpInput!): AuthPayload!
 }
 
 scalar Password

@@ -51,8 +51,11 @@ export default shield(
   {
     Query: {
       courts: allow
+    },
+    Mutation: {
+      login: allow,
+      signup: allow
     }
-    // Mutation: {}
   },
   { fallbackError: new AuthorizationError() }
 )
