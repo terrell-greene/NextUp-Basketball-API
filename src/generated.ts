@@ -77,6 +77,7 @@ export interface NexusGenRootTypes {
     phone: string; // String!
     type: NexusGenEnums['CourtType'][]; // [CourtType!]!
   }
+  Mutation: {};
   Query: {};
   Session: { // root type
     attending: NexusGenRootTypes['User'][]; // [User!]!
@@ -140,6 +141,9 @@ export interface NexusGenFieldTypes {
     phone: string; // String!
     type: NexusGenEnums['CourtType'][]; // [CourtType!]!
   }
+  Mutation: { // field return type
+    login: NexusGenRootTypes['AuthPayload']; // AuthPayload!
+  }
   Query: { // field return type
     courts: NexusGenRootTypes['Court'][]; // [Court!]!
     sessions: NexusGenRootTypes['Session'][]; // [Session!]!
@@ -166,6 +170,11 @@ export interface NexusGenFieldTypes {
 }
 
 export interface NexusGenArgTypes {
+  Mutation: {
+    login: { // args
+      input: NexusGenInputs['LoginInput']; // LoginInput!
+    }
+  }
 }
 
 export interface NexusGenAbstractResolveReturnTypes {
@@ -173,7 +182,7 @@ export interface NexusGenAbstractResolveReturnTypes {
 
 export interface NexusGenInheritedFields {}
 
-export type NexusGenObjectNames = "Address" | "AuthPayload" | "Coords" | "Court" | "Query" | "Session" | "User";
+export type NexusGenObjectNames = "Address" | "AuthPayload" | "Coords" | "Court" | "Mutation" | "Query" | "Session" | "User";
 
 export type NexusGenInputNames = "CreateSessionInput" | "LoginInput" | "SignUpInput";
 

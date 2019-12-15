@@ -65,6 +65,10 @@ input LoginInput {
   username: String!
 }
 
+type Mutation {
+  login(input: LoginInput!): AuthPayload!
+}
+
 scalar Password
 
 type Query {
