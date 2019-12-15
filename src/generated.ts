@@ -60,6 +60,10 @@ export interface NexusGenRootTypes {
     timeZone: string; // String!
     zipCode: string; // String!
   }
+  AuthPayload: { // root type
+    token: string; // String!
+    user: NexusGenRootTypes['User']; // User!
+  }
   Coords: { // root type
     latitude: number; // Float!
     longitude: number; // Float!
@@ -119,6 +123,10 @@ export interface NexusGenFieldTypes {
     timeZone: string; // String!
     zipCode: string; // String!
   }
+  AuthPayload: { // field return type
+    token: string; // String!
+    user: NexusGenRootTypes['User']; // User!
+  }
   Coords: { // field return type
     latitude: number; // Float!
     longitude: number; // Float!
@@ -165,7 +173,7 @@ export interface NexusGenAbstractResolveReturnTypes {
 
 export interface NexusGenInheritedFields {}
 
-export type NexusGenObjectNames = "Address" | "Coords" | "Court" | "Query" | "Session" | "User";
+export type NexusGenObjectNames = "Address" | "AuthPayload" | "Coords" | "Court" | "Query" | "Session" | "User";
 
 export type NexusGenInputNames = "CreateSessionInput" | "LoginInput" | "SignUpInput";
 

@@ -13,6 +13,11 @@ type Address {
   zipCode: String!
 }
 
+type AuthPayload {
+  token: String!
+  user: User!
+}
+
 type Coords {
   latitude: Float!
   longitude: Float!
