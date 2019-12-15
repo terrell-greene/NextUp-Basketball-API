@@ -49,4 +49,26 @@ scalar DateTime
 
 type Query {
   courts: [Court!]!
+  sessions: [Session!]!
+}
+
+type Session {
+  attending: [User!]!
+  coords: Coords!
+  court: Court!
+  createdBy: User!
+  date: String!
+  end: DateTime!
+  id: String!
+  numberAttending: Int!
+  start: DateTime!
+  times: String!
+  timeZone: String!
+}
+
+type User {
+  avatarUrl: String
+  fullName: String!
+  id: String!
+  username: String!
 }

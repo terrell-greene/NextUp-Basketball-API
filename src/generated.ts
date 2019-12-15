@@ -54,6 +54,22 @@ export interface NexusGenRootTypes {
     type: NexusGenEnums['CourtType'][]; // [CourtType!]!
   }
   Query: {};
+  Session: { // root type
+    attending: NexusGenRootTypes['User'][]; // [User!]!
+    coords: NexusGenRootTypes['Coords']; // Coords!
+    court: NexusGenRootTypes['Court']; // Court!
+    createdBy: NexusGenRootTypes['User']; // User!
+    end: any; // DateTime!
+    id: string; // String!
+    start: any; // DateTime!
+    timeZone: string; // String!
+  }
+  User: { // root type
+    avatarUrl?: string | null; // String
+    fullName: string; // String!
+    id: string; // String!
+    username: string; // String!
+  }
   String: string;
   Int: number;
   Float: number;
@@ -93,6 +109,26 @@ export interface NexusGenFieldTypes {
   }
   Query: { // field return type
     courts: NexusGenRootTypes['Court'][]; // [Court!]!
+    sessions: NexusGenRootTypes['Session'][]; // [Session!]!
+  }
+  Session: { // field return type
+    attending: NexusGenRootTypes['User'][]; // [User!]!
+    coords: NexusGenRootTypes['Coords']; // Coords!
+    court: NexusGenRootTypes['Court']; // Court!
+    createdBy: NexusGenRootTypes['User']; // User!
+    date: string; // String!
+    end: any; // DateTime!
+    id: string; // String!
+    numberAttending: number; // Int!
+    start: any; // DateTime!
+    times: string; // String!
+    timeZone: string; // String!
+  }
+  User: { // field return type
+    avatarUrl: string | null; // String
+    fullName: string; // String!
+    id: string; // String!
+    username: string; // String!
   }
 }
 
@@ -104,7 +140,7 @@ export interface NexusGenAbstractResolveReturnTypes {
 
 export interface NexusGenInheritedFields {}
 
-export type NexusGenObjectNames = "Address" | "Coords" | "Court" | "Query";
+export type NexusGenObjectNames = "Address" | "Coords" | "Court" | "Query" | "Session" | "User";
 
 export type NexusGenInputNames = never;
 
