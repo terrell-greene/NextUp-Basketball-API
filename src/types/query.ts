@@ -11,6 +11,6 @@ export const sessions = queryField('sessions', {
   list: true,
   resolve: (_, args, { db }) =>
     db.Session.find({ end: { $gte: new Date().toISOString() } })
-      .populate('createdBy court')
+      .populate('createdBy court attending')
       .sort({ start: 'asc' })
 })
