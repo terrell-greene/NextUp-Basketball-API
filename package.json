@@ -1,0 +1,45 @@
+{
+  "name": "nextup-basketball-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "dotenv -e dockerfiles/dev/.env -- ts-node-dev --no-notify --respawn --ignore-watch node_modules  --transpileOnly src/server",
+    "seed": "dotenv -e dockerfiles/dev/.env -- ts-node  src/db/seed"
+  },
+  "keywords": [],
+  "author": "Jalen Greene",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.2",
+    "@types/bluebird": "^3.5.29",
+    "@types/graphql-iso-date": "^3.3.3",
+    "@types/jest": "^24.0.23",
+    "@types/jsonwebtoken": "^8.3.5",
+    "@types/mongoose": "^5.5.32",
+    "@types/node": "^12.12.14",
+    "@types/redis": "^2.8.14",
+    "@types/validator": "^12.0.1",
+    "dotenv-cli": "^3.1.0",
+    "graphql-request": "^1.8.2",
+    "jest": "^24.9.0",
+    "ts-jest": "^24.2.0",
+    "ts-node": "^8.5.2",
+    "ts-node-dev": "^1.0.0-pre.44",
+    "typescript": "^3.7.2",
+    "yarn": "^1.19.2"
+  },
+  "dependencies": {
+    "apollo-errors": "^1.9.0",
+    "bcryptjs": "^2.4.3",
+    "bluebird": "^3.7.1",
+    "graphql-iso-date": "^3.6.1",
+    "graphql-shield": "^7.0.2",
+    "graphql-yoga": "^1.18.3",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.7.12",
+    "nexus": "^0.12.0-rc.5",
+    "redis": "^2.8.0",
+    "validator": "^12.1.0"
+  }
+}
