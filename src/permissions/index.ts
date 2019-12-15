@@ -50,11 +50,13 @@ const isDeveloper = rule({ cache: 'contextual' })(
 export default shield(
   {
     Query: {
-      courts: allow
+      courts: allow,
+      sessions: allow
     },
     Mutation: {
       login: allow,
-      signup: allow
+      signup: allow,
+      createSession: isAuthenticated
     }
   },
   { fallbackError: new AuthorizationError() }
