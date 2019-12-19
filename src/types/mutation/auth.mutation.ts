@@ -4,6 +4,7 @@ import { compare, hash } from 'bcryptjs'
 
 import { LoginError, ServerError, SignUpError } from '../../errors'
 import { createSession } from './utils.mutation'
+import { processUpload } from '../../utils'
 
 const { equals } = validator
 
@@ -55,7 +56,8 @@ export const signup = mutationField('signup', {
     input: arg({ type: 'SignUpInput', required: true })
   },
   resolve: async (_, { input }, { db }) => {
-    const { username, password, confirmPassword } = input
+    const { username, password, confirmPassword, avatar } = input
+    let avatarUrl = null
 
     if (!equals(password, confirmPassword)) {
       throw new SignUpError({
@@ -76,9 +78,13 @@ export const signup = mutationField('signup', {
         })
       }
 
+      if (avatar) {
+        avatarUrl = await processUpload(avatar)
+      }
+
       const hashedPassword = await hash(password, 10)
 
-      const userData = { ...input, password: hashedPassword }
+      const userData = { ...input, avatarUrl, password: hashedPassword }
 
       const newUser = await db.User.create(userData)
 

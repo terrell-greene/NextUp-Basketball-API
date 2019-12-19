@@ -20,7 +20,9 @@
     "@types/moment-timezone": "^0.5.12",
     "@types/mongoose": "^5.5.32",
     "@types/node": "^12.12.14",
+    "@types/pump": "^1.1.0",
     "@types/redis": "^2.8.14",
+    "@types/shortid": "^0.0.29",
     "@types/validator": "^12.0.1",
     "dotenv-cli": "^3.1.0",
     "graphql-request": "^1.8.2",
@@ -35,6 +37,7 @@
     "apollo-errors": "^1.9.0",
     "bcryptjs": "^2.4.3",
     "bluebird": "^3.7.1",
+    "cloudinary": "^1.18.1",
     "graphql-iso-date": "^3.6.1",
     "graphql-shield": "^7.0.2",
     "graphql-upload": "^9.0.0",
@@ -43,7 +46,9 @@
     "moment-timezone": "^0.5.27",
     "mongoose": "^5.7.12",
     "nexus": "^0.12.0-rc.5",
+    "pump": "^3.0.0",
     "redis": "^2.8.0",
+    "shortid": "^2.2.15",
     "validator": "^12.1.0"
   }
 }
