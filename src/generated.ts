@@ -59,6 +59,13 @@ export interface NexusGenInputs {
     password: any; // Password!
     username: string; // String!
   }
+  SuggestCourtInput: { // input type
+    city: string; // String!
+    name: string; // String!
+    state: string; // String!
+    street: string; // String!
+    zipCode: string; // String!
+  }
   UpdateSessionInput: { // input type
     end?: any | null; // DateTime
     sessionId: string; // ID!
@@ -109,6 +116,14 @@ export interface NexusGenRootTypes {
     start: any; // DateTime!
     timeZone: string; // String!
   }
+  SuggestedCourt: { // root type
+    city: string; // String!
+    id: string; // ID!
+    name: string; // String!
+    state: string; // String!
+    street: string; // String!
+    zipCode: string; // String!
+  }
   User: { // root type
     avatarUrl?: string | null; // String
     fullName: string; // String!
@@ -134,6 +149,7 @@ export interface NexusGenAllTypes extends NexusGenRootTypes {
   LoginInput: NexusGenInputs['LoginInput'];
   SessionsFilterInput: NexusGenInputs['SessionsFilterInput'];
   SignUpInput: NexusGenInputs['SignUpInput'];
+  SuggestCourtInput: NexusGenInputs['SuggestCourtInput'];
   UpdateSessionInput: NexusGenInputs['UpdateSessionInput'];
   CourtType: NexusGenEnums['CourtType'];
 }
@@ -171,12 +187,14 @@ export interface NexusGenFieldTypes {
     joinSession: NexusGenRootTypes['Session']; // Session!
     login: NexusGenRootTypes['AuthPayload']; // AuthPayload!
     signup: NexusGenRootTypes['AuthPayload']; // AuthPayload!
+    suggestCourt: NexusGenRootTypes['SuggestedCourt']; // SuggestedCourt!
     unjoinSession: NexusGenRootTypes['Session']; // Session!
     updateSession: NexusGenRootTypes['Session']; // Session!
   }
   Query: { // field return type
     courts: NexusGenRootTypes['Court'][]; // [Court!]!
     sessions: NexusGenRootTypes['Session'][]; // [Session!]!
+    suggestedCourts: NexusGenRootTypes['SuggestedCourt'][]; // [SuggestedCourt!]!
   }
   Session: { // field return type
     attending: NexusGenRootTypes['User'][]; // [User!]!
@@ -190,6 +208,14 @@ export interface NexusGenFieldTypes {
     start: any; // DateTime!
     times: string; // String!
     timeZone: string; // String!
+  }
+  SuggestedCourt: { // field return type
+    city: string; // String!
+    id: string; // ID!
+    name: string; // String!
+    state: string; // String!
+    street: string; // String!
+    zipCode: string; // String!
   }
   User: { // field return type
     avatarUrl: string | null; // String
@@ -213,6 +239,9 @@ export interface NexusGenArgTypes {
     signup: { // args
       input: NexusGenInputs['SignUpInput']; // SignUpInput!
     }
+    suggestCourt: { // args
+      input: NexusGenInputs['SuggestCourtInput']; // SuggestCourtInput!
+    }
     unjoinSession: { // args
       input: NexusGenInputs['JoinUnjoinSessionInput']; // JoinUnjoinSessionInput!
     }
@@ -235,9 +264,9 @@ export interface NexusGenAbstractResolveReturnTypes {
 
 export interface NexusGenInheritedFields {}
 
-export type NexusGenObjectNames = "Address" | "AuthPayload" | "Coords" | "Court" | "Mutation" | "Query" | "Session" | "User";
+export type NexusGenObjectNames = "Address" | "AuthPayload" | "Coords" | "Court" | "Mutation" | "Query" | "Session" | "SuggestedCourt" | "User";
 
-export type NexusGenInputNames = "CoordsFilterInput" | "CourtsFilterInput" | "CreateSessionInput" | "JoinUnjoinSessionInput" | "LoginInput" | "SessionsFilterInput" | "SignUpInput" | "UpdateSessionInput";
+export type NexusGenInputNames = "CoordsFilterInput" | "CourtsFilterInput" | "CreateSessionInput" | "JoinUnjoinSessionInput" | "LoginInput" | "SessionsFilterInput" | "SignUpInput" | "SuggestCourtInput" | "UpdateSessionInput";
 
 export type NexusGenEnumNames = "CourtType";
 

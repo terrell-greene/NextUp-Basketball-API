@@ -92,6 +92,7 @@ type Mutation {
 
   """Sign up new user"""
   signup(input: SignUpInput!): AuthPayload!
+  suggestCourt(input: SuggestCourtInput!): SuggestedCourt!
   unjoinSession(input: JoinUnjoinSessionInput!): Session!
   updateSession(input: UpdateSessionInput!): Session!
 }
@@ -101,6 +102,7 @@ scalar Password
 type Query {
   courts(where: CourtsFilterInput): [Court!]!
   sessions(where: SessionsFilterInput): [Session!]!
+  suggestedCourts: [SuggestedCourt!]!
 }
 
 type Session {
@@ -130,6 +132,24 @@ input SignUpInput {
   fullName: String!
   password: Password!
   username: String!
+}
+
+"""Input type for suggesting a court"""
+input SuggestCourtInput {
+  city: String!
+  name: String!
+  state: String!
+  street: String!
+  zipCode: String!
+}
+
+type SuggestedCourt {
+  city: String!
+  id: ID!
+  name: String!
+  state: String!
+  street: String!
+  zipCode: String!
 }
 
 """Required input for updating a session"""

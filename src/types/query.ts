@@ -1,5 +1,11 @@
 import { queryField, arg } from 'nexus'
 
+export const suggestedCourts = queryField('suggestedCourts', {
+  type: 'SuggestedCourt',
+  list: true,
+  resolve: async (_, args, { db }) => db.SuggestedCourt.find()
+})
+
 export const courts = queryField('courts', {
   type: 'Court',
   list: true,
