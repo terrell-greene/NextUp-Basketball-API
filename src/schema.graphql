@@ -95,6 +95,7 @@ type Mutation {
   suggestCourt(input: SuggestCourtInput!): SuggestedCourt!
   unjoinSession(input: JoinUnjoinSessionInput!): Session!
   updateSession(input: UpdateSessionInput!): Session!
+  updateUser(input: UpdateUserInput!): User!
 }
 
 scalar Password
@@ -157,6 +158,14 @@ input UpdateSessionInput {
   end: DateTime
   sessionId: ID!
   start: DateTime
+}
+
+"""Input for updating a user"""
+input UpdateUserInput {
+  avatar: Upload
+  fullName: String
+  userId: ID!
+  username: String
 }
 
 """The `Upload` scalar type represents a file upload."""

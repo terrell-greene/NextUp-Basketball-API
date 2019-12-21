@@ -51,7 +51,8 @@ export default shield(
   {
     Query: {
       courts: allow,
-      sessions: allow
+      sessions: allow,
+      suggestedCourts: isDeveloper
     },
     Mutation: {
       login: allow,
@@ -59,7 +60,8 @@ export default shield(
       createSession: isAuthenticated,
       updateSession: isAuthenticated,
       joinSession: isAuthenticated,
-      unjoinSession: isAuthenticated
+      unjoinSession: isAuthenticated,
+      updateUser: isAuthenticated
     }
   },
   { fallbackError: new AuthorizationError() }

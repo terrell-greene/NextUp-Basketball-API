@@ -71,6 +71,12 @@ export interface NexusGenInputs {
     sessionId: string; // ID!
     start?: any | null; // DateTime
   }
+  UpdateUserInput: { // input type
+    avatar?: any | null; // Upload
+    fullName?: string | null; // String
+    userId: string; // ID!
+    username?: string | null; // String
+  }
 }
 
 export interface NexusGenEnums {
@@ -151,6 +157,7 @@ export interface NexusGenAllTypes extends NexusGenRootTypes {
   SignUpInput: NexusGenInputs['SignUpInput'];
   SuggestCourtInput: NexusGenInputs['SuggestCourtInput'];
   UpdateSessionInput: NexusGenInputs['UpdateSessionInput'];
+  UpdateUserInput: NexusGenInputs['UpdateUserInput'];
   CourtType: NexusGenEnums['CourtType'];
 }
 
@@ -190,6 +197,7 @@ export interface NexusGenFieldTypes {
     suggestCourt: NexusGenRootTypes['SuggestedCourt']; // SuggestedCourt!
     unjoinSession: NexusGenRootTypes['Session']; // Session!
     updateSession: NexusGenRootTypes['Session']; // Session!
+    updateUser: NexusGenRootTypes['User']; // User!
   }
   Query: { // field return type
     courts: NexusGenRootTypes['Court'][]; // [Court!]!
@@ -248,6 +256,9 @@ export interface NexusGenArgTypes {
     updateSession: { // args
       input: NexusGenInputs['UpdateSessionInput']; // UpdateSessionInput!
     }
+    updateUser: { // args
+      input: NexusGenInputs['UpdateUserInput']; // UpdateUserInput!
+    }
   }
   Query: {
     courts: { // args
@@ -266,7 +277,7 @@ export interface NexusGenInheritedFields {}
 
 export type NexusGenObjectNames = "Address" | "AuthPayload" | "Coords" | "Court" | "Mutation" | "Query" | "Session" | "SuggestedCourt" | "User";
 
-export type NexusGenInputNames = "CoordsFilterInput" | "CourtsFilterInput" | "CreateSessionInput" | "JoinUnjoinSessionInput" | "LoginInput" | "SessionsFilterInput" | "SignUpInput" | "SuggestCourtInput" | "UpdateSessionInput";
+export type NexusGenInputNames = "CoordsFilterInput" | "CourtsFilterInput" | "CreateSessionInput" | "JoinUnjoinSessionInput" | "LoginInput" | "SessionsFilterInput" | "SignUpInput" | "SuggestCourtInput" | "UpdateSessionInput" | "UpdateUserInput";
 
 export type NexusGenEnumNames = "CourtType";
 
