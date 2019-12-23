@@ -4,12 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "dotenv -e dockerfiles/dev/.env -- ts-node-dev --no-notify --respawn --ignore-watch node_modules  --transpileOnly src/server",
+    "start": "ts-node-dev --inspect --no-notify --respawn --ignore-watch node_modules  --transpileOnly src/server",
     "clean": "rm -rf dist",
     "build": "npm -s run clean && tsc",
-    "seed": "dotenv -e dockerfiles/dev/.env -- ts-node  src/db/seed",
-    "seed:staging": "dotenv -e dockerfiles/staging/.env -- ts-node dockerfiles/staging/seed",
-    "deploy:staging": "eval $(docker-machine env nextup-staging) && docker-compose -f docker-compose.staging.yml up  --build --remove-orphans -d && eval $(docker-machine env -u)"
+    "seed": "ts-node  src/db/seed"
   },
   "keywords": [],
   "author": "Jalen Greene",
