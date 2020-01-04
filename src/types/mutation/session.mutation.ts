@@ -29,7 +29,7 @@ export const createSession = mutationField('createSession', {
 
       if (!court) {
         throw new CreateSessionError({
-          data: { courtID: 'No court exists with that id' }
+          data: { courtId: 'No court exists with that id' }
         })
       }
 
