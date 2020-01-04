@@ -4,7 +4,7 @@ import * as NodeGeocoder from 'node-geocoder'
 
 const geocoder = NodeGeocoder({
   provider: 'google',
-  apiKey: 'AIzaSyClP9cgWUgxVeGQAo1we3-kFqXqwdXRvTE'
+  apiKey: process.env.GEOCODE_API_KEY
 })
 
 export const suggestCourt = mutationField('suggestCourt', {
