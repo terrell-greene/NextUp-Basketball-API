@@ -16,7 +16,9 @@ export let redisClient: any
 async function main() {
   try {
     redisClient = redis.createClient({
-      url: process.env.REDIS_URI
+      url: process.env.REDIS_URI,
+      no_ready_check: true,
+      auth_pass: process.env.REDIS_PASSWORD
     }) as any
 
     console.log('Redis Connected')
