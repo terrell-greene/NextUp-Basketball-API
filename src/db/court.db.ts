@@ -6,8 +6,8 @@ import CoordsSchema, { ICoords } from './coords.db'
 export interface ICourt extends Document {
   id: string
   name: string
-  numberOfCourts: string
-  phone: string
+  numberOfCourts?: string
+  phone?: string
   address: IAddress
   coords: ICoords
   type: ('Indoor' | 'Outdoor')[]
@@ -16,8 +16,8 @@ export interface ICourt extends Document {
 
 const CourtSchema: Schema = new Schema({
   name: { type: String, required: true },
-  numberOfCourts: { type: String, required: true },
-  phone: { type: String, required: true },
+  numberOfCourts: { type: String },
+  phone: { type: String },
   address: AddressSchema,
   coords: CoordsSchema,
   type: { type: [String], enum: ['Indoor', 'Outdoor'] },

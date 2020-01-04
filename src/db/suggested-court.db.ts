@@ -7,6 +7,7 @@ export interface ISuggestedCourt extends Document {
   city: string
   zipCode: string
   state: string
+  timeZone: string
 }
 
 const SuggestedCourtSchema: Schema = new Schema({
@@ -14,7 +15,8 @@ const SuggestedCourtSchema: Schema = new Schema({
   street: { type: String, required: true },
   city: { type: String, required: true },
   zipCode: { type: String, required: true },
-  state: { type: String, required: true }
+  state: { type: String, required: true },
+  timeZone: { type: String, required: true }
 })
 
 export type SuggestedCourtModel = Model<ISuggestedCourt>
