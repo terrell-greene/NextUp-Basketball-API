@@ -9,5 +9,6 @@ export const SuggestedCourt = objectType({
     t.string('city')
     t.string('zipCode')
     t.string('state')
+    t.string('timeZone')
   }
 })

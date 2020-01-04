@@ -9,5 +9,6 @@ export const SuggestCourtInput = inputObjectType({
     t.string('city', { required: true })
     t.string('state', { required: true })
     t.string('zipCode', { required: true })
+    t.string('timeZone', { required: true })
   }
 })

@@ -4,7 +4,7 @@ import * as moment from 'moment-timezone'
 export const Session = objectType({
   name: 'Session',
   definition(t) {
-    t.string('id')
+    t.id('id')
     t.string('timeZone')
     t.field('createdBy', { type: 'User' })
     t.list.field('attending', { type: 'User' })
@@ -39,13 +39,19 @@ export const Session = objectType({
 
         if (
           moment(moment(new Date()).tz(timeZone)).date() ===
-          moment(start).date()
+          moment(start)
+            .tz(timeZone)
+            .date()
         ) {
           return 'Today'
         } else if (moment(start).isBefore(oneWeek)) {
-          return moment(start).format('dddd')
+          return moment(start)
+            .tz(timeZone)
+            .format('dddd')
         } else {
-          return moment(start).format('MMM Do')
+          return moment(start)
+            .tz(timeZone)
+            .format('MMM Do')
         }
       }
     })
