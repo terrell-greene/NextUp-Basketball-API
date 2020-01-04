@@ -2,8 +2,8 @@ import { mutationField, arg } from 'nexus'
 import validator from 'validator'
 import { compare, hash } from 'bcryptjs'
 
-import { LoginError, ServerError, SignUpError } from '../../errors'
-import { createSession } from './utils.mutation'
+import { LoginError, ServerError, SignUpError, LogoutError } from '../../errors'
+import { createSession, destroySession } from './utils.mutation'
 import { processUpload } from '../../utils'
 
 const { equals } = validator
@@ -49,6 +49,47 @@ export const login = mutationField('login', {
   }
 })
 
+export const adminLogin = mutationField('adminLogin', {
+  description: 'Login for an admin account',
+  type: 'AuthPayload',
+  args: { input: arg({ type: 'LoginInput', required: true }) },
+  resolve: async (_, { input }, { db }) => {
+    const { username, password } = input
+
+    const throwLoginError = () => {
+      throw new LoginError({
+        data: {
+          password: 'Invalid username/password combination'
+        }
+      })
+    }
+
+    try {
+      const user = await db.User.findOne({ username })
+
+      if (!user) throwLoginError()
+
+      if (user!.role !== 'DEVELOPER') throwLoginError()
+
+      const valid = await compare(password, user!.password)
+
+      if (!valid) throwLoginError()
+
+      const token = await createSession({ username, userId: user!.id })
+
+      return {
+        token,
+        user: user!
+      }
+    } catch (error) {
+      if (error.data) throw error
+
+      console.error(error)
+      throw new ServerError()
+    }
+  }
+})
+
 export const signup = mutationField('signup', {
   description: 'Sign up new user',
   type: 'AuthPayload',
@@ -58,6 +99,14 @@ export const signup = mutationField('signup', {
   resolve: async (_, { input }, { db }) => {
     const { username, password, confirmPassword, avatar } = input
     let avatarUrl = null
+
+    if (username.split(' ').length > 1) {
+      throw new SignUpError({
+        data: {
+          usernme: 'Password fields do not match'
+        }
+      })
+    }
 
     if (!equals(password, confirmPassword)) {
       throw new SignUpError({
@@ -99,6 +148,22 @@ export const signup = mutationField('signup', {
 
       console.error(error)
       throw new ServerError()
+    }
+  }
+})
+
+export const logout = mutationField('logout', {
+  type: 'Boolean',
+  resolve: async (_, args, { request }) => {
+    const {
+      body: { token }
+    } = request
+    try {
+      await destroySession(token)
+
+      return true
+    } catch (error) {
+      throw new LogoutError()
     }
   }
 })
