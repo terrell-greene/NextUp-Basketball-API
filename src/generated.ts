@@ -36,10 +36,22 @@ export interface NexusGenInputs {
     latitude: NexusGenInputs['CoordsFilterInput']; // CoordsFilterInput!
     longitude: NexusGenInputs['CoordsFilterInput']; // CoordsFilterInput!
   }
+  CreateCourtInput: { // input type
+    address: string; // String!
+    courtType: NexusGenEnums['CourtTypeEnum'][]; // [CourtTypeEnum!]!
+    name: string; // String!
+    numberOfCourts?: number | null; // Int
+    phone?: string | null; // String
+    suggestedCourtId: string; // ID!
+    timeZone: string; // String!
+  }
   CreateSessionInput: { // input type
     courtId: string; // ID!
     end: any; // DateTime!
     start: any; // DateTime!
+  }
+  DeleteSuggestedCourtInput: { // input type
+    suggestedCourtId: string; // ID!
   }
   JoinUnjoinSessionInput: { // input type
     sessionId: string; // ID!
@@ -64,6 +76,7 @@ export interface NexusGenInputs {
     name: string; // String!
     state: string; // String!
     street: string; // String!
+    timeZone: string; // String!
     zipCode: string; // String!
   }
   UpdateSessionInput: { // input type
@@ -80,7 +93,7 @@ export interface NexusGenInputs {
 }
 
 export interface NexusGenEnums {
-  CourtType: "Indoor" | "Outdoor"
+  CourtTypeEnum: "Indoor" | "Outdoor"
 }
 
 export interface NexusGenRootTypes {
@@ -104,11 +117,11 @@ export interface NexusGenRootTypes {
   Court: { // root type
     address: NexusGenRootTypes['Address']; // Address!
     coords: NexusGenRootTypes['Coords']; // Coords!
-    id: string; // String!
+    id: string; // ID!
     name: string; // String!
-    numberOfCourts: string; // String!
-    phone: string; // String!
-    type: NexusGenEnums['CourtType'][]; // [CourtType!]!
+    numberOfCourts?: string | null; // String
+    phone?: string | null; // String
+    type: NexusGenEnums['CourtTypeEnum'][]; // [CourtTypeEnum!]!
   }
   Mutation: {};
   Query: {};
@@ -118,7 +131,7 @@ export interface NexusGenRootTypes {
     court: NexusGenRootTypes['Court']; // Court!
     createdBy: NexusGenRootTypes['User']; // User!
     end: any; // DateTime!
-    id: string; // String!
+    id: string; // ID!
     start: any; // DateTime!
     timeZone: string; // String!
   }
@@ -128,12 +141,13 @@ export interface NexusGenRootTypes {
     name: string; // String!
     state: string; // String!
     street: string; // String!
+    timeZone: string; // String!
     zipCode: string; // String!
   }
   User: { // root type
     avatarUrl?: string | null; // String
     fullName: string; // String!
-    id: string; // String!
+    id: string; // ID!
     username: string; // String!
   }
   String: string;
@@ -150,7 +164,9 @@ export interface NexusGenRootTypes {
 export interface NexusGenAllTypes extends NexusGenRootTypes {
   CoordsFilterInput: NexusGenInputs['CoordsFilterInput'];
   CourtsFilterInput: NexusGenInputs['CourtsFilterInput'];
+  CreateCourtInput: NexusGenInputs['CreateCourtInput'];
   CreateSessionInput: NexusGenInputs['CreateSessionInput'];
+  DeleteSuggestedCourtInput: NexusGenInputs['DeleteSuggestedCourtInput'];
   JoinUnjoinSessionInput: NexusGenInputs['JoinUnjoinSessionInput'];
   LoginInput: NexusGenInputs['LoginInput'];
   SessionsFilterInput: NexusGenInputs['SessionsFilterInput'];
@@ -158,7 +174,7 @@ export interface NexusGenAllTypes extends NexusGenRootTypes {
   SuggestCourtInput: NexusGenInputs['SuggestCourtInput'];
   UpdateSessionInput: NexusGenInputs['UpdateSessionInput'];
   UpdateUserInput: NexusGenInputs['UpdateUserInput'];
-  CourtType: NexusGenEnums['CourtType'];
+  CourtTypeEnum: NexusGenEnums['CourtTypeEnum'];
 }
 
 export interface NexusGenFieldTypes {
@@ -183,16 +199,20 @@ export interface NexusGenFieldTypes {
   Court: { // field return type
     address: NexusGenRootTypes['Address']; // Address!
     coords: NexusGenRootTypes['Coords']; // Coords!
-    id: string; // String!
+    id: string; // ID!
     name: string; // String!
-    numberOfCourts: string; // String!
-    phone: string; // String!
-    type: NexusGenEnums['CourtType'][]; // [CourtType!]!
+    numberOfCourts: string | null; // String
+    phone: string | null; // String
+    type: NexusGenEnums['CourtTypeEnum'][]; // [CourtTypeEnum!]!
   }
   Mutation: { // field return type
+    adminLogin: NexusGenRootTypes['AuthPayload']; // AuthPayload!
+    createCourt: NexusGenRootTypes['Court']; // Court!
     createSession: NexusGenRootTypes['Session']; // Session!
+    deleteSuggestedCourt: boolean; // Boolean!
     joinSession: NexusGenRootTypes['Session']; // Session!
     login: NexusGenRootTypes['AuthPayload']; // AuthPayload!
+    logout: boolean; // Boolean!
     signup: NexusGenRootTypes['AuthPayload']; // AuthPayload!
     suggestCourt: NexusGenRootTypes['SuggestedCourt']; // SuggestedCourt!
     unjoinSession: NexusGenRootTypes['Session']; // Session!
@@ -211,7 +231,7 @@ export interface NexusGenFieldTypes {
     createdBy: NexusGenRootTypes['User']; // User!
     date: string; // String!
     end: any; // DateTime!
-    id: string; // String!
+    id: string; // ID!
     numberAttending: number; // Int!
     start: any; // DateTime!
     times: string; // String!
@@ -223,20 +243,30 @@ export interface NexusGenFieldTypes {
     name: string; // String!
     state: string; // String!
     street: string; // String!
+    timeZone: string; // String!
     zipCode: string; // String!
   }
   User: { // field return type
     avatarUrl: string | null; // String
     fullName: string; // String!
-    id: string; // String!
+    id: string; // ID!
     username: string; // String!
   }
 }
 
 export interface NexusGenArgTypes {
   Mutation: {
+    adminLogin: { // args
+      input: NexusGenInputs['LoginInput']; // LoginInput!
+    }
+    createCourt: { // args
+      input: NexusGenInputs['CreateCourtInput']; // CreateCourtInput!
+    }
     createSession: { // args
       input: NexusGenInputs['CreateSessionInput']; // CreateSessionInput!
+    }
+    deleteSuggestedCourt: { // args
+      input: NexusGenInputs['DeleteSuggestedCourtInput']; // DeleteSuggestedCourtInput!
     }
     joinSession: { // args
       input: NexusGenInputs['JoinUnjoinSessionInput']; // JoinUnjoinSessionInput!
@@ -277,9 +307,9 @@ export interface NexusGenInheritedFields {}
 
 export type NexusGenObjectNames = "Address" | "AuthPayload" | "Coords" | "Court" | "Mutation" | "Query" | "Session" | "SuggestedCourt" | "User";
 
-export type NexusGenInputNames = "CoordsFilterInput" | "CourtsFilterInput" | "CreateSessionInput" | "JoinUnjoinSessionInput" | "LoginInput" | "SessionsFilterInput" | "SignUpInput" | "SuggestCourtInput" | "UpdateSessionInput" | "UpdateUserInput";
+export type NexusGenInputNames = "CoordsFilterInput" | "CourtsFilterInput" | "CreateCourtInput" | "CreateSessionInput" | "DeleteSuggestedCourtInput" | "JoinUnjoinSessionInput" | "LoginInput" | "SessionsFilterInput" | "SignUpInput" | "SuggestCourtInput" | "UpdateSessionInput" | "UpdateUserInput";
 
-export type NexusGenEnumNames = "CourtType";
+export type NexusGenEnumNames = "CourtTypeEnum";
 
 export type NexusGenInterfaceNames = never;
 

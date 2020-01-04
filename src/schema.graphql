@@ -32,11 +32,11 @@ input CoordsFilterInput {
 type Court {
   address: Address!
   coords: Coords!
-  id: String!
+  id: ID!
   name: String!
-  numberOfCourts: String!
-  phone: String!
-  type: [CourtType!]!
+  numberOfCourts: String
+  phone: String
+  type: [CourtTypeEnum!]!
 }
 
 """Input type for logging in a user"""
@@ -46,9 +46,20 @@ input CourtsFilterInput {
 }
 
 """Different types of available courts"""
-enum CourtType {
+enum CourtTypeEnum {
   Indoor
   Outdoor
+}
+
+"""Input type for creating a court"""
+input CreateCourtInput {
+  address: String!
+  courtType: [CourtTypeEnum!]!
+  name: String!
+  numberOfCourts: Int
+  phone: String
+  suggestedCourtId: ID!
+  timeZone: String!
 }
 
 """Required input for creating a session"""
@@ -72,6 +83,11 @@ A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the
 """
 scalar DateTime
 
+"""Input type for deleting a suggested court"""
+input DeleteSuggestedCourtInput {
+  suggestedCourtId: ID!
+}
+
 """Required input for to join/unjoin a session"""
 input JoinUnjoinSessionInput {
   sessionId: ID!
@@ -84,11 +100,16 @@ input LoginInput {
 }
 
 type Mutation {
+  """Login for an admin account"""
+  adminLogin(input: LoginInput!): AuthPayload!
+  createCourt(input: CreateCourtInput!): Court!
   createSession(input: CreateSessionInput!): Session!
+  deleteSuggestedCourt(input: DeleteSuggestedCourtInput!): Boolean!
   joinSession(input: JoinUnjoinSessionInput!): Session!
 
   """Login a user"""
   login(input: LoginInput!): AuthPayload!
+  logout: Boolean!
 
   """Sign up new user"""
   signup(input: SignUpInput!): AuthPayload!
@@ -113,7 +134,7 @@ type Session {
   createdBy: User!
   date: String!
   end: DateTime!
-  id: String!
+  id: ID!
   numberAttending: Int!
   start: DateTime!
   times: String!
@@ -141,6 +162,7 @@ input SuggestCourtInput {
   name: String!
   state: String!
   street: String!
+  timeZone: String!
   zipCode: String!
 }
 
@@ -150,6 +172,7 @@ type SuggestedCourt {
   name: String!
   state: String!
   street: String!
+  timeZone: String!
   zipCode: String!
 }
 
@@ -174,6 +197,6 @@ scalar Upload
 type User {
   avatarUrl: String
   fullName: String!
-  id: String!
+  id: ID!
   username: String!
 }
