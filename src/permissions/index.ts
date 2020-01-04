@@ -57,11 +57,15 @@ export default shield(
     Mutation: {
       login: allow,
       signup: allow,
+      suggestCourt: allow,
+      logout: isAuthenticated,
       createSession: isAuthenticated,
       updateSession: isAuthenticated,
       joinSession: isAuthenticated,
       unjoinSession: isAuthenticated,
-      updateUser: isAuthenticated
+      updateUser: isAuthenticated,
+      deleteSuggestedCourt: isDeveloper,
+      createCourt: isDeveloper
     }
   },
   { fallbackError: new AuthorizationError() }
