@@ -24,10 +24,6 @@ export const LoginError = createError('LoginError', {
   message: 'Login error encountered'
 })
 
-export const LogoutError = createError('LogoutError', {
-  message: 'Logout error encountered'
-})
-
 export const UpdateUserError = createError('UpdateUserError', {
   message: 'UpdateUser error encountered'
 })

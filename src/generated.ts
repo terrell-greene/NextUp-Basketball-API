@@ -212,7 +212,6 @@ export interface NexusGenFieldTypes {
     deleteSuggestedCourt: boolean; // Boolean!
     joinSession: NexusGenRootTypes['Session']; // Session!
     login: NexusGenRootTypes['AuthPayload']; // AuthPayload!
-    logout: boolean; // Boolean!
     signup: NexusGenRootTypes['AuthPayload']; // AuthPayload!
     suggestCourt: NexusGenRootTypes['SuggestedCourt']; // SuggestedCourt!
     unjoinSession: NexusGenRootTypes['Session']; // Session!

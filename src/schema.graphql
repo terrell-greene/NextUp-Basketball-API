@@ -109,7 +109,6 @@ type Mutation {
 
   """Login a user"""
   login(input: LoginInput!): AuthPayload!
-  logout: Boolean!
 
   """Sign up new user"""
   signup(input: SignUpInput!): AuthPayload!

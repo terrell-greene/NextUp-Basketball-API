@@ -2,9 +2,10 @@ import { mutationField, arg } from 'nexus'
 import validator from 'validator'
 import { compare, hash } from 'bcryptjs'
 
-import { LoginError, ServerError, SignUpError, LogoutError } from '../../errors'
-import { createSession, destroySession } from './utils.mutation'
+import { LoginError, ServerError, SignUpError } from '../../errors'
+
 import { processUpload } from '../../utils'
+import { createToken } from './utils.mutation'
 
 const { equals } = validator
 
@@ -34,7 +35,7 @@ export const login = mutationField('login', {
 
       if (!valid) throwLoginError()
 
-      const token = await createSession({ username, userId: user!.id })
+      const token = createToken(user!.id)
 
       return {
         token,
@@ -75,7 +76,7 @@ export const adminLogin = mutationField('adminLogin', {
 
       if (!valid) throwLoginError()
 
-      const token = await createSession({ username, userId: user!.id })
+      const token = createToken(user!.id)
 
       return {
         token,
@@ -137,7 +138,7 @@ export const signup = mutationField('signup', {
 
       const newUser = await db.User.create(userData)
 
-      const token = await createSession({ username, userId: newUser.id })
+      const token = createToken(newUser.id)
 
       return {
         token,
@@ -148,22 +149,6 @@ export const signup = mutationField('signup', {
 
       console.error(error)
       throw new ServerError()
-    }
-  }
-})
-
-export const logout = mutationField('logout', {
-  type: 'Boolean',
-  resolve: async (_, args, { request }) => {
-    const {
-      body: { token }
-    } = request
-    try {
-      await destroySession(token)
-
-      return true
-    } catch (error) {
-      throw new LogoutError()
     }
   }
 })

@@ -1,3 +1,9 @@
 node_modules
 .devcontainer/.env
 dist
+coverage
+.nyc_output
+Dockerfile
+docker-compose.yml
+.dockerignore
+dockerfiles

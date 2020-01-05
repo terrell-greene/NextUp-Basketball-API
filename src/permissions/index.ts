@@ -1,9 +1,10 @@
-import { rule, shield, and, allow } from 'graphql-shield'
+import { rule, shield, allow } from 'graphql-shield'
 import { Request } from 'express-serve-static-core'
+import { verify } from 'jsonwebtoken'
 
 import { Context } from '../context'
-import { redisClient } from '../server'
 import { AuthorizationError } from '../errors'
+import { APP_SECRET } from '../utils'
 
 const getUser = async (
   req: Request
@@ -14,21 +15,22 @@ const getUser = async (
 
   const token = authorization!.replace('Bearer ', '')
 
-  const userId = await redisClient.getAsync(token)
+  try {
+    const { userId } = (await verify(token, APP_SECRET)) as { userId: string }
 
-  if (!userId) throw new AuthorizationError()
-
-  return { userId, token }
+    return { userId, token }
+  } catch (error) {
+    throw new AuthorizationError()
+  }
 }
 
 const isAuthenticated = rule({ cache: 'contextual' })(
   async (_, args, { request }: Context) => {
-    const { token, userId } = await getUser(request)
+    const user = await getUser(request)
 
     request.body = {
       ...request.body,
-      token,
-      userId
+      ...user
     }
 
     return true
@@ -42,6 +44,11 @@ const isDeveloper = rule({ cache: 'contextual' })(
     const user = await db.User.findById(userId)
 
     if (!user || user.role !== 'DEVELOPER') return new AuthorizationError()
+
+    request.body = {
+      ...request.body,
+      ...user
+    }
 
     return true
   }
@@ -58,7 +65,6 @@ export default shield(
       login: allow,
       signup: allow,
       suggestCourt: allow,
-      logout: isAuthenticated,
       createSession: isAuthenticated,
       updateSession: isAuthenticated,
       joinSession: isAuthenticated,
