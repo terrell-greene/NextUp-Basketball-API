@@ -31,7 +31,6 @@ services:
 
     links:
       - mongo
-      - redis
 
   mongo:
     image: mongo
@@ -40,11 +39,3 @@ services:
       - '27017:27017'
     volumes:
       - /data/db
-
-  redis:
-    image: redis
-    restart: unless-stopped
-    ports:
-      - '6379:6379'
-    volumes:
-      - /data/db-redis
